@@ -1,0 +1,31 @@
+<body>
+  Sign in please
+  <form class = "form" [formGroup]="profileForm" (ngSubmit)="onSubmit()">
+    <label>
+      Username*:
+      <p><input type="text" formControlName="name" required></p>
+    </label>
+    <label>
+      Password*:
+      <p><input type="text" formControlName="password" required></p>
+    </label>
+    <label>
+      Confirm password*:
+      <p><input type="text" formControlName="passwordConfirm" required></p>
+    </label>
+    <label>
+      Birth date:
+      <p><input type="text" formControlName="birthdate"></p>
+    </label>
+  </form>
+
+  <button [disabled]="!profileForm.valid">
+    Confirm
+  </button>
+  <p>
+    Form Status: {{ profileForm.status }}
+  </p>
+  <!--<p>ValueName: {{ name.value }}</p>-->
+  <!--<p>ValuePassword: {{ password.value }}</p>-->
+  <!--<p>ValuePasswordConfirm: {{ passwordConfirm.value }}</p>-->
+</body>
