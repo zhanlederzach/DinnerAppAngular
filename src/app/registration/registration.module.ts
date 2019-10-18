@@ -1,8 +1,9 @@
-import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
-import { RegistrationRoutingModule } from './registration-routing.module';
-import { RegistrationComponent } from './registration/registration.component';
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import {NgModule} from '@angular/core';
+import {CommonModule} from '@angular/common';
+import {RegistrationRoutingModule} from './registration-routing.module';
+import {RegistrationComponent} from './registration/registration.component';
+import {FormsModule, ReactiveFormsModule} from '@angular/forms';
+import {MatCheckboxModule, MatFormFieldModule, MatInputModule} from '@angular/material';
 
 
 @NgModule({
@@ -10,7 +11,10 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
     CommonModule,
     RegistrationRoutingModule,
     FormsModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    MatFormFieldModule,
+    MatCheckboxModule,
+    MatInputModule
   ],
   declarations: [
     RegistrationComponent

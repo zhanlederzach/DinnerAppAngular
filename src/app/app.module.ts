@@ -5,17 +5,23 @@ import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { SliderModule } from 'angular-image-slider';
-
+import { HomeComponent } from './home/home.component';
+import {NgxFlickingModule} from '@egjs/ngx-flicking';
+import {MatFormFieldModule, MatInputModule} from '@angular/material';
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+    HomeComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     BrowserAnimationsModule,
-    SliderModule
+    SliderModule,
+    NgxFlickingModule,
+    MatFormFieldModule,
+    MatInputModule
   ],
   bootstrap: [AppComponent]
 })

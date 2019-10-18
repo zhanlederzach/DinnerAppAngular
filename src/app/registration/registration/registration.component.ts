@@ -1,7 +1,8 @@
-import { Component, OnInit, EventEmitter, Output } from '@angular/core';
-import { FormBuilder, Validators } from '@angular/forms';
-import { Router, ActivatedRoute } from '@angular/router';
-import { DataService } from 'src/app/data-service';
+import {Component, OnInit} from '@angular/core';
+import {FormBuilder, FormControl, Validators} from '@angular/forms';
+import {ActivatedRoute, Router} from '@angular/router';
+import {DataService} from 'src/app/data-service';
+import {EmailValidation, PasswordValidation, RepeatPasswordEStateMatcher, RepeatPasswordValidator} from './validators';
 
 @Component({
   selector: 'app-registration',
@@ -11,28 +12,43 @@ import { DataService } from 'src/app/data-service';
 
 export class RegistrationComponent implements OnInit {
 
-  profileForm = this.fb.group({
+  // profileForm = this.fb.group({
+  //   name: ['',  Validators.required],
+  //   // email: ['', [Validators.required, Validators.email]],
+  //   email: new FormControl('', Validators.compose([
+  //     Validators.required,
+  //     Validators.pattern('^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+.[a-zA-Z0-9-.]+$')
+  //   ])),
+  //   password: ['', [Validators.required, Validators.minLength(6)]],
+  //   passwordConfirm: ['', Validators.required],
+  //   birthdate: [''],
+  // });
+  // tslint:disable-next-line:new-parens
+  form = this.fb.group({
     name: ['',  Validators.required],
-    // password: ['', Validators.required],
-    // passwordConfirm: ['', Validators.required],
-    password: [''],
-    passwordConfirm: [''],
-    birthdate: [''],
-  });
+    email: new FormControl('', EmailValidation),
+    password: new FormControl('', PasswordValidation),
+    passwordAgain: new FormControl(''),
+  }, {validator: RepeatPasswordValidator});
 
   constructor(private fb: FormBuilder,
               private router: Router,
               private dataService: DataService,
               private route: ActivatedRoute) { }
 
-  ngOnInit() { }
-
-  onSubmit() {
-    this.dataService.changeMessage(this.profileForm.controls['name'].value)
-    // console.log(this.profileForm.controls['name'].value)
-    // this.router.navigateByUrl('');
-    this.router.navigate(['home'])
-    // console.warn(this.profileForm.value);
+  ngOnInit() {
   }
 
+  onSubmit() {
+    this.dataService.saveProfile({
+      name: this.form.controls.name.value,
+      email: this.form.controls.email.value,
+      password: this.form.controls.password.value,
+    });
+    this.router.navigate(['home']);
+  }
+
+  closeRegistration() {
+    this.router.navigate(['home']);
+  }
 }
