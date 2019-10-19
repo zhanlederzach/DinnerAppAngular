@@ -1,14 +1,16 @@
 import {Injectable} from '@angular/core';
-import {Observable, Subject} from 'rxjs';
-import {Profile} from './model/Profile';
+import {BehaviorSubject, Observable, Subject} from 'rxjs';
+import {Profile} from './models/Profile';
 
 @Injectable({
   providedIn: 'root',
 })
 export class DataService {
 
-  private subject = new Subject<string>();
-  private observable = new Observable<string>();
+  private subject = new BehaviorSubject<string>('');
+  data = this.subject.asObservable();
+
+  // private observable = new Observable<string>();
   private profile: Profile;
   private profiles: Profile[] = [{
     password: '1234qwer',
@@ -25,7 +27,7 @@ export class DataService {
   }
 
   getName$(): Observable<string> {
-    return this.subject.asObservable();
+    return this.data;
   }
 
   checkProfile(candidate: Profile): boolean {
@@ -33,7 +35,8 @@ export class DataService {
   }
 
   login(candidate: Profile) {
-    this.profile = this.profiles.filter(profile => profile.email === candidate.email && profile.password === candidate.password)[0];
+    this.profile = this.profiles.find(profile => profile.email === candidate.email && profile.password === candidate.password);
+    console.log('pushedName ' + this.profile.name);
     this.subject.next(this.profile.name);
   }
 

@@ -5,14 +5,15 @@ import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { SliderModule } from 'angular-image-slider';
-import { HomeComponent } from './home/home.component';
-import {NgxFlickingModule} from '@egjs/ngx-flicking';
-import {MatFormFieldModule, MatInputModule} from '@angular/material';
+import { HomeComponent } from './modules/home/home.component';
+import { NgxFlickingModule} from '@egjs/ngx-flicking';
+import { MatFormFieldModule, MatInputModule} from '@angular/material';
+import { HttpClientModule } from '@angular/common/http';
 
 @NgModule({
   declarations: [
-    AppComponent,
-    HomeComponent
+    AppComponent
+    // HomeComponent
   ],
   imports: [
     BrowserModule,
@@ -21,7 +22,8 @@ import {MatFormFieldModule, MatInputModule} from '@angular/material';
     SliderModule,
     NgxFlickingModule,
     MatFormFieldModule,
-    MatInputModule
+    MatInputModule,
+    HttpClientModule
   ],
   bootstrap: [AppComponent]
 })

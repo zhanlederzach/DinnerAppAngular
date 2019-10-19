@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import {FormBuilder, FormControl, Validators} from '@angular/forms';
 import {EmailValidation, PasswordValidation, RepeatPasswordValidator} from '../../registration/registration/validators';
 import {ActivatedRoute, Router} from '@angular/router';
-import {DataService} from '../../data-service';
+import {DataService} from '../../../data-service';
 
 @Component({
   selector: 'app-login',
@@ -37,6 +37,7 @@ export class LoginComponent implements OnInit {
       this.form.setErrors({
         invalidCredentials: false,
       });
+      console.log('loggined name' , profile);
       this.dataService.login(profile);
       this.router.navigate(['home']);
     }

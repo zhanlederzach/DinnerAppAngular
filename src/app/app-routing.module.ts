@@ -1,12 +1,12 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { AppComponent } from './app.component';
-import {HomeComponent} from './home/home.component';
+import {HomeComponent} from './modules/home/home.component';
 
 const routes: Routes = [
   {
     path: 'auth',
-    loadChildren: () => import('./registration/registration.module').then(mod => mod.RegistrationModule)
+    loadChildren: () => import('./modules/registration/registration.module').then(mod => mod.RegistrationModule)
   },
   {
     path: '',
@@ -15,12 +15,12 @@ const routes: Routes = [
   },
   {
     path: 'home',
-    redirectTo: '',
-    component: HomeComponent,
+    // component: HomeComponent,
+    loadChildren: () => import('./modules/home/home.module').then(mod => mod.HomeModule)
   },
   {
     path: 'login',
-    loadChildren: () => import('./login/login.module').then(mod => mod.LoginModule)
+    loadChildren: () => import('./modules/login/login.module').then(mod => mod.LoginModule)
   }
 ];
 
