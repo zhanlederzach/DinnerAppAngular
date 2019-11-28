@@ -29,6 +29,7 @@ export class LoginComponent implements OnInit {
       email: this.form.controls.email.value,
       password: this.form.controls.password.value,
     };
+
     if (!this.dataService.checkProfile(profile)) {
       this.form.setErrors({
         invalidCredentials: true,
@@ -37,6 +38,7 @@ export class LoginComponent implements OnInit {
       this.form.setErrors({
         invalidCredentials: false,
       });
+      localStorage.setItem('isLogged', this.form.controls.password.value);
       console.log('loggined name' , profile);
       this.dataService.login(profile);
       this.router.navigate(['home']);

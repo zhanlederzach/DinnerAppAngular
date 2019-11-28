@@ -44,4 +44,10 @@ export class DataService {
     this.subject.next(null);
     this.profile = null;
   }
+
+  isAuthenticated(): boolean {
+    return localStorage.getItem('isLogged') != null;
+  }
+
+
 }
