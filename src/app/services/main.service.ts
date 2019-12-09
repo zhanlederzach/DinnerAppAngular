@@ -37,9 +37,6 @@ export class MainService {
         continue;
       }
 
-      console.log(key);
-      console.log(typeof body[key]);
-
       // if (body[key] instanceof Date) {
       //   body[key] = this.formatDate(body[key]);
       // }

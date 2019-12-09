@@ -30,19 +30,21 @@ export class LoginComponent implements OnInit {
       password: this.form.controls.password.value,
     };
 
-    if (!this.dataService.checkProfile(profile)) {
-      this.form.setErrors({
-        invalidCredentials: true,
-      });
-    } else {
+    this.dataService.login(profile).then(value => {
       this.form.setErrors({
         invalidCredentials: false,
       });
-      localStorage.setItem('isLogged', this.form.controls.password.value);
-      console.log('loggined name' , profile);
-      this.dataService.login(profile);
-      this.router.navigate(['home']);
-    }
+      if (profile.email === 'admin' && profile.password === 'admin') {
+        this.dataService.adminEntered();
+        this.router.navigate(['/admin']);
+      } else {
+        this.closeLogin();
+      }
+    }).catch(reason => {
+      this.form.setErrors({
+        invalidCredentials: true,
+      });
+    });
   }
 
   closeLogin() {

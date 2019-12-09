@@ -1,6 +1,7 @@
 import { Component, OnInit, Input, OnDestroy } from '@angular/core';
 import { Observable, Subscription } from 'rxjs';
 import { DataService } from './data-service';
+import {ModalOptions} from "./components/modal/modal.component";
 
 @Component({
   selector: 'app-root',

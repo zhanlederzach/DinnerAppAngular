@@ -3,6 +3,7 @@ import {MainService} from './main.service';
 import {HttpClient} from '@angular/common/http';
 import {Table} from '../models/Table';
 import {tap} from 'rxjs/operators';
+import {REFRESH_KEY, TOKEN_KEY} from '../api_config';
 
 
 @Injectable({
@@ -23,18 +24,22 @@ export class ProviderService extends MainService {
   }
 
   refreshToken() {
-    return this.http.post<any>(`${this.urlRoot}/refresh/`, {
+    return this.http.post<any>(`${this.urlRoot}/refresh`, {
       refresh: this.getRefreshToken()
-    }).pipe(tap((token: { access: string } ) => {
-      this.storeJwtToken(token.access);
+    }).pipe(tap((token: { token: string } ) => {
+      this.storeJwtToken(token.token);
     }));
   }
 
   private getRefreshToken() {
-    return localStorage.getItem('refresh');
+    return localStorage.getItem(REFRESH_KEY);
   }
 
-  storeJwtToken(jwt: string ) {
-    localStorage.setItem('token', jwt);
+  storeRefreshToken(token: string) {
+    localStorage.setItem(REFRESH_KEY, token);
+  }
+
+  storeJwtToken(jwt: string) {
+    localStorage.setItem(TOKEN_KEY, jwt);
   }
 }

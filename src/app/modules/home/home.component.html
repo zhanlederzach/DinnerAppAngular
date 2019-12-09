@@ -1,7 +1,6 @@
 <div class="container">
   <nav class="navbar navbar-expand-lg navbar-light bg-light">
-    <a class="navbar-brand" href="#">Dinner App</a>
-
+    <a class="navbar-brand" routerLink="">Dinner App</a>
     <div *ngIf="!loggedIn" class="collapse navbar-collapse">
       <ul class="align-content-end navbar-nav mr-auto">
         <li class="nav-item">
@@ -15,11 +14,32 @@
     <div *ngIf="loggedIn">
       <button class="btn btn-danger" (click)="onLogout()">Logout</button>
     </div>
+    <div *ngIf="isManager">
+      <button class="btn btn-info" (click)="onManagerClick()" style="margin-left: 20px">Add restaurant</button>
+    </div>
+    <div *ngIf="isManager">
+      <button class="btn btn-info" (click)="onUpdateClick()" style="margin-left: 20px">Update restaurant</button>
+    </div>
+    <div class="row" style="padding-left: 16px">
+      <div class="col" >
+        <div ngbDropdown class="d-inline-block">
+          <button class="btn btn-outline-primary" id="dropdownMenuButton" aria-haspopup="true"  ngbDropdownToggle (click)="isDropdownOpen = !isDropdownOpen" (clickOutside)="closeDropDown()">
+            Toggle dropdown
+          </button>
+          <div ngbDropdownMenu aria-labelledby="dropdownMenuButton" *ngIf="isDropdownOpen" class="col" style="display: flex; flex-direction: column">
+            <button ngbDropdownItem>Theme pink</button>
+            <button ngbDropdownItem>Another Action</button>
+            <button ngbDropdownItem>Something else is here</button>
+          </div>
+        </div>
+      </div>
+    </div>
   </nav>
   <div style="margin: 20px"></div>
   <div class="d-flex flex-column justify-content-center align-items-center">
+    <h1 [@myTrigger]>{{welcomeMessage}}</h1>
+    <h1 [@myTrigger]>{{ dataService.getName$() | async }}</h1>
 
-    <h1>{{welcomeMessage}}</h1>
     <p>Book your table anywhere</p>
 
     <form class="form-inline">
@@ -30,7 +50,6 @@
         <button class="btn btn-primary mb-2 form-control" type="submit">Submit</button>
       </div>
     </form>
-
   </div>
 
   <div class="d-flex flex-column justify-content-center align-items-center">
@@ -39,8 +58,8 @@
         <div class="card" style="width: 18rem; margin: 10px">
           <img src="{{restaurant.imageUrl}}" class="card-img-top" alt="...">
           <div class="card-body">
-            <h5 class="card-title">{{restaurant.title}}</h5>
-            <p class="card-text">{{restaurant.kitchen}} * {{restaurant.district}}</p>
+            <h5 zoom [zoomSize]="22" class="card-title" routerLink="/restaurant/{{restaurant.id}}">{{restaurant.title}}</h5>
+            <p class="card-text">{{restaurant.cuisine}} ∙ {{restaurant.district}}</p>
             <p>{{restaurant.reviews.length}} reviews</p>
           </div>
         </div>
@@ -50,16 +69,19 @@
 
   <div class="d-flex flex-column justify-content-center align-items-center">
     <h4 class="text-center" style="padding-top: 20px; padding-bottom: 20px">Observe popular open tables</h4>
-    <div class="d-flex flex-row">
+    <div class="d-flex flex-row flex-wrap">
       <div *ngFor="let table of tables">
         <div class="card" style="width: 18rem; margin: 10px">
 <!--          <img src="{{restaurant.imageUrl}}" class="card-img-top" alt="...">-->
           <div class="card-body">
-            <h5 class="card-title">{{table.name}}</h5>
-            <p class="card-text">Number of seats available:  {{table.seats}}</p>
+            <div class="d-flex justify-content-between">
+              <h5 class="card-title">{{table.name}}-{{table.id}}</h5>
+              <button *ngIf="isManager" class="btn btn-danger flex-wrap justify-content-start" style="height: 30px; width: 30px" (click)="onDeleteTable(table)">x</button>
+            </div>
+            <p class="card-text">Number of seats available: {{table.seats | seats:5}}</p>
             <p>Status: {{table.status}}</p>
           </div>
-          <button class="btn-primary">Book now</button>
+          <button class="btn-primary" (click)="onTableBook(table)">Book now</button>
         </div>
       </div>
     </div>

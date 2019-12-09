@@ -1,34 +1,36 @@
-<div class="form-inline">
-  <h3 style="margin-left: 15px">Login</h3>
-  <button type="button" class="close" style="margin-left: auto" aria-label="Close" (click)="closeLogin()">
-    <span aria-hidden="true">&times;</span>
-  </button>
-</div>
-<form class="col-md-10" (ngSubmit)="onSubmit()" [formGroup]="form">
-  <div class="form-group">
-    <label for="inputEmail">Email address</label>
-
-    <br>
-    <small *ngIf="form.get('email').hasError('required') && form.controls['email']?.touched">
-      E-mail is mandatory.
-    </small>
-    <input aria-describedby="emailHelp" class="form-control" formControlName="email" id="inputEmail"
-           placeholder="Enter email"
-           type="email">
-
-    <small class="form-text text-muted" id="emailHelp">We'll never share your email with anyone else.</small>
-    <br/>
-
-    <label for="inputPassword">Password</label>
-    <br/>
-    <small *ngIf="form.get('password').hasError('required') && form.controls['[password]']?.touched">
-      Password is mandatory.
-    </small>
-    <input aria-describedby="passwordHelp" class="form-control" formControlName="password" id="inputPassword"
-           placeholder="Password" type="password">
+<div class="container">
+  <div class="form-inline">
+    <h3 style="margin-left: 15px">Login</h3>
+    <button type="button" class="close" style="margin-left: auto" aria-label="Close" (click)="closeLogin()">
+      <span aria-hidden="true">&times;</span>
+    </button>
   </div>
-  <small *ngIf="form.hasError('invalidCredentials')" class="has-error">
-    Login or Password is invalid
-  </small>
-  <button class="btn btn-primary" [disabled]="form.invalid" type="submit">Submit</button>
-</form>
+  <form class="col-md-10" (ngSubmit)="onSubmit()" [formGroup]="form">
+    <div class="form-group">
+      <label for="inputEmail">Email address</label>
+
+      <br>
+      <small *ngIf="form.get('email').hasError('required') && form.controls['email']?.touched">
+        E-mail is mandatory.
+      </small>
+      <input aria-describedby="emailHelp" class="form-control" formControlName="email" id="inputEmail"
+             placeholder="Enter email"
+             type="email">
+
+      <small class="form-text text-muted" id="emailHelp">We'll never share your email with anyone else.</small>
+      <br/>
+
+      <label for="inputPassword">Password</label>
+      <br/>
+      <small *ngIf="form.get('password').hasError('required') && form.controls['[password]']?.touched">
+        Password is mandatory.
+      </small>
+      <input aria-describedby="passwordHelp" class="form-control" formControlName="password" id="inputPassword"
+             placeholder="Password" type="password">
+    </div>
+    <small *ngIf="form.hasError('invalidCredentials')" class="has-error">
+      Login or Password is invalid
+    </small>
+    <button class="btn btn-primary" [disabled]="form.invalid" type="submit">Submit</button>
+  </form>
+</div>

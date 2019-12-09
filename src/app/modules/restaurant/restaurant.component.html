@@ -1,0 +1,97 @@
+<div class="container">
+  <nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <a class="navbar-brand" routerLink="">Dinner App</a>
+
+    <div *ngIf="!loggedIn" class="collapse navbar-collapse">
+      <ul class="align-content-end navbar-nav mr-auto">
+        <li class="nav-restaurant">
+          <button class="btn btn-info active" routerLink="/login">Login</button>
+        </li>
+        <li class="nav-restaurant">
+          <button class="btn" routerLink="/auth">Sign up</button>
+        </li>
+      </ul>
+    </div>
+    <div *ngIf="loggedIn">
+      <button class="btn btn-danger" (click)="onLogout()">Logout</button>
+    </div>
+  </nav>
+  <div style="margin: 20px"></div>
+
+  <h1>Restaurant details:</h1>
+  <div class="jumbotron">
+    <img src="{{restaurant.imageUrl}}" alt="{{restaurant.title}}">
+  </div>
+
+  <div class="d-flex flex-column">
+    <h3>
+      {{restaurant.title}}
+    </h3>
+    <p>Cuisine: {{restaurant.cuisine}}</p>
+    <p>District: {{restaurant.district}}</p>
+    <div>
+      Location: {{restaurant.location}}
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-sm-12">
+      <div class="card">
+        <div class="card-body">
+          Reviews:
+          <ul class="list-group">
+
+            <div>
+              <div *ngFor="let comment of restaurant.reviews" class="list-group-restaurant">
+                <div [@myTrigger] class="card">
+                  <div class="card-header">
+                    <div class="d-flex align-content-around justify-content-between">
+                      <b>{{comment.author}}</b>
+                      <b>{{comment.date}}</b>
+                    </div>
+                  </div>
+                  <div class="card-body">
+                    <div class="card-text">
+                      {{comment.description | filterBlacklist}}
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div *ngIf="isAuthenticated()" class="list-group-restaurant">
+              <div class="card">
+                <div class="card-header">
+                  <div class="d-flex align-content-around justify-content-between">
+                    <b></b>
+                    <b>Today</b>
+                  </div>
+                </div>
+                <div class="card-body">
+                  <div class="card-text">
+                    <div class="form-group">
+                      <label for="commentId">Comment text:</label>
+                      <textarea
+                        [(ngModel)]="commentBody"
+                        class="form-control"
+                        id="commentId"
+                        rows="3"></textarea>
+                    </div>
+                    <div class="d-flex col-sm-3 justify-content-between align-content-between">
+                      <button (click)="putComment()" class="btn btn-info">
+                        <fa name="comment"></fa>
+                        Comment
+                      </button>
+                      <button (click)="clearComment()" class="btn btn-warning">Clear</button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>
